@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Days Without Accident</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url("background.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        .count-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            font-size: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .count {
+            font-size: 50px;
+            font-weight: bold;
+            color: #000000;
+            margin-bottom: 60px;
+        }
+        .days {
+            font-weight: bold;
+            color: red;
+        }
+        img {
+            position: absolute;
+            top:0;
+            left: 0;
+            width: 300px; /* Adjust the width as needed */
+            height: auto; /* Let the height adjust proportionally */
+         }
+    </style>
+</head>
+<body>
+    <div class="count-container">
+        <div class="count" id="count">Loading...</div>
+    </div>
+    <img src="image.jpg" alt="image.jpg">
+    <script>
+        // Function to calculate the number of days between two dates
+        function calculateDays(targetDate) {
+            const currentDate = new Date();
+            const timeDiff = currentDate.getTime() - targetDate.getTime();
+            const days = Math.floor(timeDiff / (1000 * 3600 * 24));
+            return days;
+        }
+
+        // Function to update the timer element
+        function updateTimer(targetDate, countElementId, country) {
+            const countElement = document.getElementById(countElementId);
+            const days = calculateDays(targetDate);
+            let message = `Malteurop ${country} has worked <span class="days">${days}</span> Days Without Accident`;
+
+            countElement.innerHTML = message;
+        }
+
+        // Set the target dates for each plant
+        const plants = [
+            { name: "Marton", targetDate: new Date('2023-06-25') },
+            { name: "Geelong", targetDate: new Date('2023-06-01') },
+            { name: "Ashburton", targetDate: new Date('2023-06-01') }
+        ];
+
+        let currentPlantIndex = 0;
+
+        // Function to switch to the next plant
+        function switchPlant() {
+            currentPlantIndex = (currentPlantIndex + 1) % plants.length;
+            const { name, targetDate } = plants[currentPlantIndex];
+            updateTimer(targetDate, 'count', name);
+        }
+
+        // Initial call to update the timer for the first plant
+        switchPlant();
+
+        // Refresh the counts every 10 seconds
+        setInterval(switchPlant, 10000);
+    </script>
+</body>
+</html>
