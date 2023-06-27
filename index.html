@@ -52,8 +52,8 @@
         // Function to calculate the number of days between two dates
         function calculateDays(targetDate) {
             const currentDate = new Date();
-            const timeDiff = currentDate.getTime() - targetDate.getTime();
-            const days = Math.floor(timeDiff / (1000 * 3600 * 24));
+            const timeDiff = Math.abs(targetDate - currentDate);
+            const days = Math.ceil(timeDiff / (1000 * 3600 * 24));
             return days;
         }
 
@@ -61,32 +61,60 @@
         function updateTimer(targetDate, countElementId, country) {
             const countElement = document.getElementById(countElementId);
             const days = calculateDays(targetDate);
+
             let message = `Malteurop ${country} has worked <span class="days">${days}</span> Days Without Accident`;
 
             countElement.innerHTML = message;
         }
 
-        // Set the target dates for each plant
+        // Set the target dates for each plant (updated to 24:00:00 AM)
         const plants = [
-            { name: "Marton", targetDate: new Date('2023-06-20') },
-            { name: "Geelong", targetDate: new Date('2023-06-20') },
-            { name: "Ashburton", targetDate: new Date('2023-06-25') }
-        ];
+            { name: "Marton", targetDate: new Date('2023-06-25T24:00:00') },
+            { name: "Geelong", targetDate: new Date('2022-06-25T24:00:00') },
+            { name: "Ashburton", targetDate: new Date('2022-06-25T24:00:00') }
+];
+
 
         let currentPlantIndex = 0;
 
-        // Function to switch to the next plant
+        // Function to switch to the next plant and update the count
         function switchPlant() {
             const { name, targetDate } = plants[currentPlantIndex];
             updateTimer(targetDate, 'count', name);
             currentPlantIndex = (currentPlantIndex + 1) % plants.length;
         }
 
+        // Function to check if the current day has changed and update the countdown
+        function checkDayChange() {
+            const { targetDate } = plants[currentPlantIndex];
+            const currentDate = new Date();
+
+            // Check if the current day has changed
+            if (currentDate.getDate() !== targetDate.getDate()) {
+                switchPlant();
+            }
+        }
+
         // Initial call to update the timer for the first plant
         switchPlant();
 
-        // Refresh the counts every 1 second
-        setInterval(switchPlant, 5000);
+        // Refresh the counts every 5 second
+        const interval = 5000; // Set the interval in milliseconds (e.g., 1000 milliseconds = 1 second)
+
+        // Calculate the time remaining until the next increment
+        const currentTime = new Date();
+        const targetTime = new Date(plants[currentPlantIndex].targetDate);
+        const timeDiff = targetTime - currentTime;
+        const timeUntilNextIncrement = timeDiff % interval;
+
+        // Wait for the remaining time before the first increment
+        setTimeout(switchPlant, timeUntilNextIncrement);
+
+        // Schedule the subsequent increments at the specified interval
+        setInterval(switchPlant, interval);
+
+        // Check for day change every minute (adjust the interval as needed)
+        setInterval(checkDayChange, 60000);
     </script>
 </body>
 </html>
