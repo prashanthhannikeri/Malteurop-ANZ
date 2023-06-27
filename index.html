@@ -40,6 +40,8 @@
             height: auto; /* Let the height adjust proportionally */
          }
     </style>
+    <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0">
+    <meta http-equiv="refresh" content="100">
 </head>
 <body>
     <div class="count-container">
@@ -66,25 +68,25 @@
 
         // Set the target dates for each plant
         const plants = [
-            { name: "Marton", targetDate: new Date('2021-06-25') },
-            { name: "Geelong", targetDate: new Date('2021-06-01') },
-            { name: "Ashburton", targetDate: new Date('2021-06-01') }
+            { name: "Marton", targetDate: new Date('2022-06-01') },
+            { name: "Geelong", targetDate: new Date('2022-06-01') },
+            { name: "Ashburton", targetDate: new Date('2020-06-01') }
         ];
 
         let currentPlantIndex = 0;
 
         // Function to switch to the next plant
         function switchPlant() {
-            currentPlantIndex = (currentPlantIndex + 1) % plants.length;
             const { name, targetDate } = plants[currentPlantIndex];
             updateTimer(targetDate, 'count', name);
+            currentPlantIndex = (currentPlantIndex + 1) % plants.length;
         }
 
         // Initial call to update the timer for the first plant
         switchPlant();
 
-        // Refresh the counts every 10 seconds
-        setInterval(switchPlant, 10000);
+        // Refresh the counts every 1 second
+        setInterval(switchPlant, 5000);
     </script>
 </body>
 </html>
