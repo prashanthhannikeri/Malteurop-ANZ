@@ -52,6 +52,15 @@
            left: 0;
            padding:100px; /* Optional: Add some padding for spacing */
         }
+        .bottom-right-text {
+          font-size: 30px;
+           font-weight:bold;
+           color: #000000;
+           position: absolute;
+           bottom: 0;
+           left: 0;
+           padding:100px; /* Optional: Add some padding for spacing */
+        }
     </style>
     <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0">
     <meta http-equiv="refresh" content="100">
@@ -60,6 +69,7 @@
     <div class="count-container">
         <div class="count" id="count">Loading...</div>
         <div class="bottom-left-text" id="lost-time-accidents">Number of Lost Time Accidents (YTD): <span class="accident-number">5</span></div>
+        <div class="bottom-right-text" id="previous-record">Previous Site Record (Days): <span class="record-days">120</span></div>
     </div>
     <img src="image.jpg" alt="image.jpg">
     <script>
@@ -83,20 +93,22 @@
 
         // Set the target dates and lost time accidents for each plant (updated to 24:00:00 AM)
         const plants = [
-            { name: "Marton", targetDate: new Date('2021-05-28T24:00:00'), accidents: 3 },
-            { name: "Geelong", targetDate: new Date('2023-07-28T24:00:00'), accidents: 7 },
-            { name: "Ashburton", targetDate: new Date('2019-05-28T24:00:00'), accidents: 2 }
+            { name: "Marton", targetDate: new Date('2021-05-28T24:00:00'), accidents: 3, previousRecord: 150 },
+            { name: "Geelong", targetDate: new Date('2023-07-28T24:00:00'), accidents: 7, previousRecord: 100 },
+            { name: "Ashburton", targetDate: new Date('2019-05-28T24:00:00'), accidents: 2, previousRecord: 200 }
         ];
 
         let currentPlantIndex = 0;
 
         // Function to switch to the next plant and update the count
         function switchPlant() {
-            const { name, targetDate, accidents } = plants[currentPlantIndex];
-            updateTimer(targetDate, 'count', name);
-            document.getElementById('lost-time-accidents').innerHTML = `Number of Lost Time Accidents: <span class="accident-number">${accidents}</span>`;
-            currentPlantIndex = (currentPlantIndex + 1) % plants.length;
+           const { name, targetDate, accidents, previousRecord } = plants[currentPlantIndex];
+           updateTimer(targetDate, 'count', name);
+           document.getElementById('lost-time-accidents').innerHTML = `Number of Lost Time Accidents (YTD): <span class="accident-number">${accidents}</span>`;
+           document.getElementById('previous-record').innerHTML = `Previous Site Record (Days): <span class="record-days">${previousRecord}</span>`;
+           currentPlantIndex = (currentPlantIndex + 1) % plants.length;
         }
+
 
         // Function to check if the current day has changed and update the countdown
         function checkDayChange() {
