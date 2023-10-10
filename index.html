@@ -43,6 +43,9 @@
         .accident-number {
              color: Red; /* Change color as desired */
         }
+        .record-days {
+             color: Red; /* Change color as desired */
+        }
         .bottom-left-text {
            font-size: 30px;
            font-weight:bold;
@@ -53,7 +56,7 @@
            padding:100px; /* Optional: Add some padding for spacing */
         }
         .bottom-right-text {
-          font-size: 30px;
+           font-size: 30px;
            font-weight:bold;
            color: #000000;
            position: absolute;
@@ -129,7 +132,7 @@
         setInterval(switchPlant, interval);
 
         // Check for day change every minute
-        setInterval(checkDayChange, 6000);
+        setInterval(checkDayChange, 60000);
     </script>
 </body>
 </html>
