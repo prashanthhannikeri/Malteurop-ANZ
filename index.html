@@ -34,7 +34,7 @@
         }
         img {
             position: absolute;
-            top:0;
+            top:10px;
             left:0;
             width: 300px; /* Adjust the width as needed */
             height: auto; /* Let the height adjust proportionally */
@@ -51,7 +51,7 @@
            font-weight:bold;
            color: #000000;
            position: absolute;
-           bottom: 20px;
+           bottom: 30px;
            left: 0;
            padding:100px; /* Optional: Add some padding for spacing */
         }
@@ -60,7 +60,7 @@
            font-weight:bold;
            color: #000000;
            position: absolute;
-           bottom: 20px;
+           bottom: 30px;
            right: 0;
            padding:100px; /* Optional: Add some padding for spacing */
         }
@@ -89,15 +89,15 @@
             const countElement = document.getElementById(countElementId);
             const days = calculateDays(targetDate);
 
-            let message = `Malteurop ${country} has worked <span class="days">${days}</span> Days Without Accident`;
+            let message = `Malteurop ${country} has worked <span class="days">${days}</span> days without a lost time Accident`;
 
             countElement.innerHTML = message;
         }
 
         // Set the target dates and lost time accidents for each plant (updated to 24:00:00 AM)
         const plants = [
-            { name: "Marton", targetDate: new Date('2021-05-28T24:00:00'), accidents: 3, previousRecord: 150 },
-            { name: "Geelong", targetDate: new Date('2023-07-28T24:00:00'), accidents: 7, previousRecord: 100 },
+            { name: "Marton", targetDate: new Date('2021-05-28T24:00:00'), accidents: 3, previousRecord: 300 },
+            { name: "Geelong", targetDate: new Date('2023-07-28T24:00:00'), accidents: 1, previousRecord: 100 },
             { name: "Ashburton", targetDate: new Date('2019-05-28T24:00:00'), accidents: 2, previousRecord: 200 }
         ];
 
