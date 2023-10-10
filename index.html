@@ -56,13 +56,12 @@
         }
     </style>
     <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0">
-    <meta http-equiv="refresh" content="10">
+    <meta http-equiv="refresh" content="100">
 </head>
 <body>
     <div class="count-container">
         <div class="count" id="count">Loading...</div>
-        <div class="bottom-left-text">
-        <p>Number of Lost Time Accidents: <span class="accident-number">5</span></p> <!-- Adjust the value as needed -->
+        <div class="bottom-left-text" id="lost-time-accidents">Number of Lost Time Accidents: <span class="accident-number">5</span></div>
     </div>
     <img src="image.jpg" alt="image.jpg">
     <script>
@@ -84,20 +83,20 @@
             countElement.innerHTML = message;
         }
 
-        // Set the target dates for each plant (updated to 24:00:00 AM)
+        // Set the target dates and lost time accidents for each plant (updated to 24:00:00 AM)
         const plants = [
-            { name: "Marton", targetDate: new Date('2021-05-28T24:00:00') },
-            { name: "Geelong", targetDate: new Date('2023-07-28T24:00:00') },
-            { name: "Ashburton", targetDate: new Date('2019-05-28T24:00:00') }
-];
-
+            { name: "Marton", targetDate: new Date('2021-05-28T24:00:00'), accidents: 3 },
+            { name: "Geelong", targetDate: new Date('2023-07-28T24:00:00'), accidents: 7 },
+            { name: "Ashburton", targetDate: new Date('2019-05-28T24:00:00'), accidents: 2 }
+        ];
 
         let currentPlantIndex = 0;
 
         // Function to switch to the next plant and update the count
         function switchPlant() {
-            const { name, targetDate } = plants[currentPlantIndex];
+            const { name, targetDate, accidents } = plants[currentPlantIndex];
             updateTimer(targetDate, 'count', name);
+            document.getElementById('lost-time-accidents').innerHTML = `Number of Lost Time Accidents: <span class="accident-number">${accidents}</span>`;
             currentPlantIndex = (currentPlantIndex + 1) % plants.length;
         }
 
@@ -115,23 +114,12 @@
         // Initial call to update the timer for the first plant
         switchPlant();
 
-        // Refresh the counts every 5 second
-        const interval = 4000; // Set the interval in milliseconds (e.g., 1000 milliseconds = 1 second)
-
-        // Calculate the time remaining until the next increment
-        const currentTime = new Date();
-        const targetTime = new Date(plants[currentPlantIndex].targetDate);
-        const timeDiff = targetTime - currentTime;
-        const timeUntilNextIncrement = timeDiff % interval;
-
-        // Wait for the remaining time before the first increment
-        setTimeout(switchPlant, timeUntilNextIncrement);
-
-        // Schedule the subsequent increments at the specified interval
+        // Refresh the counts every 5 seconds
+        const interval = 5000;
         setInterval(switchPlant, interval);
 
-        // Check for day change every minute (adjust the interval as needed)
-        setInterval(checkDayChange, 6000);
+        // Check for day change every minute
+        setInterval(checkDayChange, 60000);
     </script>
 </body>
 </html>
